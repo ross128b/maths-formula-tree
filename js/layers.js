@@ -75,7 +75,7 @@ addLayer("u",{
 		 cost:new OmegaNum(250),
 		 description:"points x ln(t)*|sin(ln(t))|",
 		 canAfford(){return player.points.gte(250)},
-		 unlocked(){return(hasUpgrade(this.layer,14)},
+		 unlocked(){return(hasUpgrade(this.layer,14))},
 		 effect(){
 			 var eff15 = player.t.points.log()
 			 
