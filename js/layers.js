@@ -1,4 +1,5 @@
 var tiu=0
+var u15=0
 addLayer("u",{
     name: "upgrade", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "U", // This appears on the layer's node. Default is the id with the first letter capitalized
@@ -66,7 +67,10 @@ addLayer("u",{
         	description:"u13 0.25->0.25+log(t)",
         	canAfford(){return player.points.gte(98.99)},
         	unlocked() { return (hasUpgrade(this.layer, 13))},
-        	pay(){player.points = player.points.minus(98.99)},
+        	pay(){
+                player.points = player.points.minus(98.99)
+                u15=player.t.points
+            },
 
 
         },
@@ -75,12 +79,23 @@ addLayer("u",{
 		 cost:new OmegaNum(250),
 		 description:"points x ln(t)*|sin(ln(t))|",
 		 canAfford(){return player.points.gte(250)},
+         pay(){player.points=player.points.minus(250)},
 		 unlocked(){return(hasUpgrade(this.layer,14))},
 		 effect(){
-			 var eff15 = player.t.points.log()
+            var eff15 = new OmegaNum(0)
+			eff15 = (Math.sin(player.t.points.log().mod(88).add(1).div(57.29577951472))*player.t.points.log()+1)
+            return eff15
 			 
 		 },
+         effectDisplay() { return format(this.effect())+"x" },
 	    },
+        21:{
+            title:"don't wait too long",
+            cost:new OmegaNum(1000),
+            description:"WIP",
+            canAfford(){return player.points.gte(1000)},
+            pay(){player.points=player.points.minus(1000)},
+        },
     },
     milestones: {
         0: {
