@@ -1,4 +1,4 @@
-﻿let modInfo = {
+let modInfo = {
 	name: "math formula tree",
 	id: "math formula tree",
 	author: "ross128b",
@@ -44,6 +44,8 @@ function getPointGen() {
 	if (hasUpgrade("u", 11)) gain = gain.times(upgradeEffect("u", 11).add(new OmegaNum(10).div(100000000)))
 	if (hasUpgrade("u", 12)) gain = gain.times(3)
 	if (hasUpgrade("u", 13)) gain = gain.times(upgradeEffect("u",13))
+	if (hasUpgrade("u", 15)) gain = gain.times(upgradeEffect("u",15))
+
 
 	return gain
 }
@@ -58,7 +60,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return false
+	return hasUpgrade("u", 21)
 }
 
 
