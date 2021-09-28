@@ -80,7 +80,7 @@ addLayer("u",{
 			 var eff15 = player.t.points.log()
 			 
 		 },
-	    }.
+	    },
     },
     milestones: {
         0: {
