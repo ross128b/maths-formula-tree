@@ -61,7 +61,7 @@ addLayer("u",{
             unlocked() { return ( hasUpgrade(this.layer, 12))},
         },
         14:{
-        	title:"u13 is not strong enough",
+        	title:"u13 is not strong enough(it cost 98.99 points)",
         	cost:new OmegaNum(98.99),
         	description:"u13 0.25->0.25+log(t)",
         	canAfford(){return player.points.gte(98.99)},
@@ -69,7 +69,18 @@ addLayer("u",{
         	pay(){player.points = player.points.minus(98.99)},
 
 
-        }
+        },
+	    15:{
+		 title:"sin!",
+		 cost:new OmegaNum(250),
+		 description:"points x ln(t)*|sin(ln(t))|",
+		 canAfford(){return player.points.gte(250)},
+		 unlocked(){return(hasUpgrade(this.layer,14)},
+		 effect(){
+			 var eff15 = player.t.points.log()
+			 
+		 },
+	    }.
     },
     milestones: {
         0: {
