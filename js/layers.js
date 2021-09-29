@@ -56,7 +56,7 @@ addLayer("u",{
             pay(){player.points = player.points.minus(50)},
             effect(){
                 if(!hasUpgrade("u",14))return player.t.points.pow(0.25)
-                if(hasUpgrade("u",14))return player.t.points.pow(new OmegaNum(0.25).add(player.t.points.log().div(230.2585092994)))
+                if(hasUpgrade("u",14))return player.t.points.pow(new OmegaNum(0.25).add((player.t.points.add(1)).log().div(230.2585092994)))
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
             unlocked() { return ( hasUpgrade(this.layer, 12))},
@@ -77,13 +77,16 @@ addLayer("u",{
 	    15:{
 		 title:"sin!",
 		 cost:new OmegaNum(250),
-		 description:"points x ln(t)*|sin(ln(t))|",
+		 description:"points x ln(t)*sin(ln(t))<br>*2.88539%pi<br>(buying this will reset your time)",
 		 canAfford(){return player.points.gte(250)},
-         pay(){player.points=player.points.minus(250)},
+         pay(){
+            player.points=player.points.minus(250)
+            player.t.points=new OmegaNum(1)
+         },
 		 unlocked(){return(hasUpgrade(this.layer,14))},
 		 effect(){
             var eff15 = new OmegaNum(0)
-			eff15 = (Math.sin(player.t.points.log().mod(88).add(1).div(57.29577951472))*player.t.points.log()+1)
+			eff15 = (Math.sin((player.t.points.add(1)).log().times(2.8853900817779).mod(3.1415926535898))*player.t.points.log()+1)
             return eff15
 			 
 		 },
@@ -91,11 +94,27 @@ addLayer("u",{
 	    },
         21:{
             title:"don't wait too long",
-            cost:new OmegaNum(1000),
-            description:"WIP",
-            canAfford(){return player.points.gte(1000)},
-            pay(){player.points=player.points.minus(1000)},
+            cost:new OmegaNum(2500),
+            unlocked(){return(hasUpgrade(this.layer,15))},
+            description:"points x0.5^(5-log(5,t))",
+            canAfford(){return player.points.gte(2500)},
+            pay(){
+                player.points=player.points.minus(2500)
+                player.t.points=new OmegaNum(1)
+            },
+            effectDisplay() { return format(this.effect())+"x" },
+            effect(){
+                if(player.t.points.lt(3125))return new OmegaNum(2).pow(new OmegaNum(5).minus((player.t.points.add(1)).log().div(1.6094379124341)))
+                if(player.t.points.gte(3125))return new OmegaNum(0.5).pow(((player.t.points.add(1)).log().div(1.6094379124341).minus(5)).max(5))
+            },
         },
+        22:{
+            title:"WIP",
+            cost:new OmegaNum(20000),
+            description:"WIP",
+        },
+
+
     },
     milestones: {
         0: {
@@ -132,5 +151,22 @@ addLayer("t",{
     passiveGeneration(){
         return 1
     },
-    row: 1,
+    row: 2,
+    buyables: {
+        showRespec: true,
+            respec() { // Optional, reset things and give back your currency. Having this function makes a respec button appear
+                resetBuyables(this.layer)
+                doReset(this.layer, true) // Force a reset
+            },
+            respecText: "Respec Thingies", // Text on Respec button, optional
+            respecMessage: "Are you sure? Respeccing these doesn't accomplish much.",
+    },
+    11:{
+        title:"time booster",
+        cost(){return 0},
+     //   effect(x){
+       //     return effb1.log().div(2.302585092994)
+        //}
+    }
+
 })
