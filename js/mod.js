@@ -45,6 +45,7 @@ function getPointGen() {
 	if (hasUpgrade("u", 12)) gain = gain.times(3)
 	if (hasUpgrade("u", 13)) gain = gain.times(upgradeEffect("u",13))
 	if (hasUpgrade("u", 15)) gain = gain.times(upgradeEffect("u",15))
+	if (hasUpgrade("u", 21)) gain = gain.times(upgradeEffect("u",21))
 
 
 	return gain
@@ -60,7 +61,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return hasUpgrade("u", 21)
+	return hasUpgrade("u", 22)
 }
 
 
